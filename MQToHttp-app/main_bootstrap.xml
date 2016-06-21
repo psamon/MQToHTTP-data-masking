@@ -1,0 +1,98 @@
+<project name="IIB-CI-BOOTSTRAP" default="bootstrap" basedir="..">
+	<description>IIB Continuous Integration (bootstrap script)</description>
+
+	<target name="bootstrap">
+		<tstamp />
+		<property environment="env" />
+		<property name="build.main" value="${path.build}/build_main.xml" />
+		<property file="${path.build}/build.properties" />
+		<property name="version" value="${bar.version}" />
+		<exec executable="id" />
+
+		<!-- call Ant with build_main.xml as another user in a new shell -->
+		<!-- https://ant.apache.org/manual/running.html -->
+		<property name="wkspc.owner" value="${user.iib}:${group.iib}" />
+		<property name="wkspc.mode" value="go+rw" />
+
+		<!-- call Ant with build_main.xml as another user in a new shell -->
+		<!-- https://ant.apache.org/manual/running.html -->
+
+		<delete failonerror="true" verbose="true">
+			<fileset dir="." includes="**/*surefirebooter*.jar" />
+		</delete>
+
+		<fileset dir="${ant.library.dir}" id="ant.jar.files">
+			<include name="**/*.jar" />
+		</fileset>
+
+		<pathconvert pathsep=":" property="jars.ant" refid="ant.jar.files" />
+		<property name="ext.dirs" value="${path.iib}/common/jdk/lib:${path.iib}/common/jdk/jre/lib/ext" />
+		<property name="args.jvm" value="-cp $CLASSPATH:$MQSI_JREPATH/${jars.ant} -Djava.ext.dirs=${ext.dirs} -Dant.home=${ant.home} ${ant.main.class}" />
+		<property name="args.ant" value="-f ${build.main} -Dappname=${path.build} -Dbar.version=${version}" />
+		<property name="init.env" value=". ${iib.mqsiprofile}" />
+		<antcall target="checkOS" />
+	</target>
+
+	<!--checking if for windows and non windows OS-->
+
+	<target depends="ifOSWindows, ifOSNotWindows" name="checkOS" />
+
+	<condition property="isOSUnix">
+
+		<os family="unix" />
+
+	</condition>
+
+
+
+	<condition property="isOSWindows">
+
+		<os family="windows" />
+
+	</condition>
+
+
+
+	<!-- if the OS is windows call the target run.script.windows -->
+
+	<target name="ifOSWindows" if="isOSWindows">
+
+		<echo>is windows........</echo>
+
+		<antcall target="runscript.windows" />
+
+	</target>
+
+
+
+	<!-- if the OS is not windows call the target run.script.unix-->
+
+	<target name="ifOSNotWindows" if="isOSUnix">
+
+		<echo>is unix........</echo>
+
+		<antcall target="runscript.unix" />
+
+	</target>
+
+
+
+	<target name="runscript.windows">
+
+		<echo>Running Commands in Windows machines.</echo>
+	</target>
+
+	<target name="runscript.unix">
+
+		<echo>Running commands in  Unix machine.</echo>
+		<exec executable="sudo">
+			<arg value="-n" />
+			<arg value="-u" />
+			<arg value="${user.iib}" />
+			<arg value="sh" />
+			<arg value="--login" />
+			<arg value="-c" />
+			<arg value="${init.env}; $MQSI_JREPATH/bin/java ${args.jvm} ${args.ant}" />
+		</exec>
+	</target>
+</project>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ComIbmJavaCompute.msgnode="ComIbmJavaCompute.msgnode" xmlns:ComIbmMQInput.msgnode="ComIbmMQInput.msgnode" xmlns:ComIbmMQReply.msgnode="ComIbmMQReply.msgnode" xmlns:ComIbmWSRequest.msgnode="ComIbmWSRequest.msgnode" xmlns:FailureHandlerWithErrorQueue.subflow="FailureHandlerWithErrorQueue.subflow" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:eflow="http://www.ibm.com/wbi/2005/eflow" xmlns:utility="http://www.ibm.com/wbi/2005/eflow_utility"
+    nsURI="Main.msgflow" nsPrefix="Main.msgflow">
+  <eClassifiers xmi:type="eflow:FCMComposite" name="FCMComposite_1">
+    <eSuperTypes href="http://www.ibm.com/wbi/2005/eflow#//FCMBlock"/>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.HTTP_METHOD" name="HTTP_METHOD" lowerBound="1" defaultValueLiteral="POST">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.HTTP_URL" name="HTTP_URL" lowerBound="1" defaultValueLiteral="http://api-springboot.mybluemix.net/operate/addJSON">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.OUTPUT_QUEUE" name="OUTPUT_QUEUE" lowerBound="1" defaultValueLiteral="MQToHttp.OUT">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.OUTPUT_QUEUE_MGR" name="OUTPUT_QUEUE_MGR" defaultValueLiteral="QMGR">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.LOGGER_NAME" name="LOGGER_NAME" defaultValueLiteral="ApplicationLogger">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.ALERT_QUEUE" name="ALERT_QUEUE" defaultValueLiteral="ALERT">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.ALERT_QUEUE_MGR" name="ALERT_QUEUE_MGR" defaultValueLiteral="QMGR">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.ALERT" name="ALERT" defaultValueLiteral="FALSE">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.FIRE_AND_FORGET" name="FIRE_AND_FORGET" defaultValueLiteral="FALSE">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.INCIDENT_AREA" name="INCIDENT_AREA" defaultValueLiteral="GAMS">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <translation xmi:type="utility:TranslatableString" key="Main" bundleName="Main" pluginId="MQToHttp-app"/>
+    <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/MQToHttp-app/icons/full/obj16/Main.gif"/>
+    <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/MQToHttp-app/icons/full/obj30/Main.gif"/>
+    <composition>
+      <nodes xmi:type="ComIbmMQInput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_8" location="19,52" queueName="MQToHttp.IN" messageDomainProperty="BLOB">
+        <translation xmi:type="utility:ConstantString" string="Read Request"/>
+        <shortDescription xmi:type="utility:ConstantString" string="Read request message from input queue"/>
+      </nodes>
+      <nodes xmi:type="ComIbmJavaCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_35" location="335,55" javaClass="com.anz.MQToHttp.compute.RequestTransformCompute" javaClassLoader="{MQToHttp-lib}">
+        <translation xmi:type="utility:ConstantString" string="Transform Request"/>
+        <shortDescription xmi:type="utility:ConstantString" string="User defined Java transformation "/>
+      </nodes>
+      <nodes xmi:type="ComIbmJavaCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_5" location="713,57" javaClass="com.anz.MQToHttp.compute.ResponseTransformCompute" javaClassLoader="{MQToHttp-lib}">
+        <translation xmi:type="utility:ConstantString" string="Transform Response"/>
+        <shortDescription xmi:type="utility:ConstantString" string="User defined Java transformation"/>
+      </nodes>
+      <nodes xmi:type="ComIbmWSRequest.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="581,56" URLSpecifier="http://api-springboot.mybluemix.net/operate/add/55/6" httpMethod="GET" httpVersion="1.1" protocol="TLS" messageDomainProperty="BLOB" replaceInputMsgWithHTTPError="false" errorMsgLocationInTree="OutputRoot.ERROR" replaceInputMsgWithWSResponse="false" responseMsgLocationInTree="OutputRoot.BLOB">
+        <translation xmi:type="utility:ConstantString" string="HTTP Request"/>
+      </nodes>
+      <nodes xmi:type="ComIbmJavaCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_2" location="486,55" javaClass="com.anz.MQToHttp.compute.AddUDPs" javaClassLoader="{MQToHttp-lib}">
+        <translation xmi:type="utility:ConstantString" string="Add UDPs"/>
+      </nodes>
+      <nodes xmi:type="ComIbmJavaCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_9" location="876,57" javaClass="com.anz.MQToHttp.compute.OrganiseHeaders" javaClassLoader="{MQToHttp-lib}">
+        <translation xmi:type="utility:ConstantString" string="Organise Headers"/>
+      </nodes>
+      <nodes xmi:type="ComIbmMQReply.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_3" location="1205,83">
+        <translation xmi:type="utility:ConstantString" string="Reply"/>
+      </nodes>
+      <nodes xmi:type="FailureHandlerWithErrorQueue.subflow:FCMComposite_1" xmi:id="FCMComposite_1_4" location="668,139">
+        <translation xmi:type="utility:ConstantString" string="FailureHandlerWithErrorQueue"/>
+      </nodes>
+      <nodes xmi:type="ComIbmJavaCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_6" location="178,53" javaClass="com.anz.MQToHttp.compute.LoggingInputCompute" javaClassLoader="{MQToHttp-lib}">
+        <translation xmi:type="utility:ConstantString" string="Logging Input"/>
+      </nodes>
+      <nodes xmi:type="ComIbmJavaCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_7" location="1060,87" javaClass="com.anz.MQToHttp.compute.LoggingOutputCompute" javaClassLoader="{MQToHttp-lib}">
+        <translation xmi:type="utility:ConstantString" string="Logging Output"/>
+      </nodes>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_2" targetNode="FCMComposite_1_2" sourceNode="FCMComposite_1_35" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_11" targetNode="FCMComposite_1_5" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_5" targetNode="FCMComposite_1_1" sourceNode="FCMComposite_1_2" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_4" targetNode="FCMComposite_1_9" sourceNode="FCMComposite_1_5" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_8" targetNode="FCMComposite_1_4" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.error" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_10" targetNode="FCMComposite_1_4" sourceNode="FCMComposite_1_8" sourceTerminalName="OutTerminal.catch" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_12" targetNode="FCMComposite_1_6" sourceNode="FCMComposite_1_8" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_13" targetNode="FCMComposite_1_35" sourceNode="FCMComposite_1_6" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_14" targetNode="FCMComposite_1_7" sourceNode="FCMComposite_1_9" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_15" targetNode="FCMComposite_1_7" sourceNode="FCMComposite_1_4" sourceTerminalName="OutTerminal.Output" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_16" targetNode="FCMComposite_1_3" sourceNode="FCMComposite_1_7" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+    </composition>
+    <propertyOrganizer>
+      <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.HTTP_METHOD">
+        <propertyName xmi:type="utility:TranslatableString" key="Property.HTTP_METHOD" bundleName="Main" pluginId="MQToHttp-app"/>
+        <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.HTTP_URL">
+          <propertyName xmi:type="utility:TranslatableString" key="Property.HTTP_URL" bundleName="Main" pluginId="MQToHttp-app"/>
+          <propertyDescriptor groupName="Group.MQ" configurable="true" userDefined="true" describedAttribute="Property.OUTPUT_QUEUE">
+            <propertyName xmi:type="utility:TranslatableString" key="Property.OUTPUT_QUEUE" bundleName="Main" pluginId="MQToHttp-app"/>
+            <propertyDescriptor groupName="Group.MQ" configurable="true" userDefined="true" describedAttribute="Property.OUTPUT_QUEUE_MGR">
+              <propertyName xmi:type="utility:TranslatableString" key="Property.OUTPUT_QUEUE_MGR" bundleName="Main" pluginId="MQToHttp-app"/>
+              <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.LOGGER_NAME">
+                <propertyName xmi:type="utility:TranslatableString" key="Property.LOGGER_NAME" bundleName="Main" pluginId="MQToHttp-app"/>
+                <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.ALERT_QUEUE">
+                  <propertyName xmi:type="utility:TranslatableString" key="Property.ALERT_QUEUE" bundleName="Main" pluginId="MQToHttp-app"/>
+                  <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.ALERT_QUEUE_MGR">
+                    <propertyName xmi:type="utility:TranslatableString" key="Property.ALERT_QUEUE_MGR" bundleName="Main" pluginId="MQToHttp-app"/>
+                    <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.ALERT">
+                      <propertyName xmi:type="utility:TranslatableString" key="Property.ALERT" bundleName="Main" pluginId="MQToHttp-app"/>
+                      <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.FIRE_AND_FORGET">
+                        <propertyName xmi:type="utility:TranslatableString" key="Property.FIRE_AND_FORGET" bundleName="Main" pluginId="MQToHttp-app"/>
+                        <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.INCIDENT_AREA">
+                          <propertyName xmi:type="utility:TranslatableString" key="Property.INCIDENT_AREA" bundleName="Main" pluginId="MQToHttp-app"/>
+                        </propertyDescriptor>
+                      </propertyDescriptor>
+                    </propertyDescriptor>
+                  </propertyDescriptor>
+                </propertyDescriptor>
+              </propertyDescriptor>
+            </propertyDescriptor>
+          </propertyDescriptor>
+        </propertyDescriptor>
+      </propertyDescriptor>
+    </propertyOrganizer>
+    <stickyBoard/>
+    <patternAnnotations/>
+  </eClassifiers>
+</ecore:EPackage>

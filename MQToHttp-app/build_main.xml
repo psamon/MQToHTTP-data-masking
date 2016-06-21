@@ -1,0 +1,74 @@
+<project name="IIB-CI-MAIN" basedir="..">
+	<description>IIB Continuous Integration(main script)</description>
+	<property name="version" value="${bar.version}" />
+
+<!-- This exec task invokes MQSICREATEBAR IIB task -->
+	<exec executable="mqsicreatebar">
+		<arg value="-data" />
+		<arg value="${basedir}" />
+		<arg value="-b" />
+		<arg value="${appname}-${version}.bar" />
+		<arg value="-a" />
+		<arg value="${appname}" />
+		<arg value="-trace" />
+	</exec>
+
+
+	<delete failonerror="true" verbose="true">
+		<fileset dir="." includes="**/*Java.jar" />
+	</delete>
+
+	<delete failonerror="true" verbose="true">
+		<fileset dir="." includes="**/*.bar" />
+	</delete>
+	
+		<delete failonerror="true" verbose="true">
+		<fileset dir="." includes="**/*surefire*" />
+	</delete>
+	
+
+	<copydir src="." dest="/tmp/poms/${appname}.lock"  includes="**/pom.xml" />
+
+	<copydir src="." dest="/tmp/poms/${appname}.lock"  includes="**/main_bootstrap.xml" />
+
+	<copydir src="." dest="/tmp/poms/${appname}.lock"  includes="**/build_main.xml" />
+
+	<copydir src="." dest="/tmp/poms/${appname}.lock"  includes="**/zip-resources.xml" />
+		
+	<delete failonerror="true" verbose="true">
+		<fileset dir="." includes="**/pom.xml" />
+	</delete>
+
+
+	<delete failonerror="true" verbose="true">
+		<fileset dir="." includes="**/main_bootstrap.xml" />
+	</delete>
+
+	<delete failonerror="true" verbose="true">
+		<fileset dir="." includes="**/build_main.xml" />
+	</delete>
+
+	<delete failonerror="true" verbose="true">
+		<fileset dir="." includes="**/zip-resources.xml" />
+	</delete>
+		
+	<exec executable="mqsipackagebar">
+		<arg value="-w" />
+		<arg value="." />
+		<arg value="-a" />
+		<arg value="${appname}-${version}.bar" />
+		<arg value="-k" />
+		<arg value="${appname}" />
+	</exec>
+
+	<copydir src="/tmp/poms/${appname}.lock" dest="."  includes="**/pom.xml" />
+
+	<copydir src="/tmp/poms/${appname}.lock" dest="."   includes="**/main_bootstrap.xml" />
+
+	<copydir src="/tmp/poms/${appname}.lock" dest="."  includes="**/build_main.xml" />
+	
+	<copydir src="/tmp/poms/${appname}.lock" dest="."  includes="**/zip-resources.xml" />
+
+	<!-- <delete dir="/tmp/poms/${appname}"/> -->
+
+</project>

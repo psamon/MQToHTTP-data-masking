@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<MessagePool xmlns="http://wwww.ibm.com/iib/test/1.0.0">
+    <MQInputMessage timestamp="1462506798659" nodeId="FCMComposite_1_8" name="FailMessage" id="1462506798659-243">
+        <plainText></plainText>
+        <MessageHeader backoutCount="0" characterSet="0" encoding="0" expiry="-1" feedback="0" messageFlags="0" messageType="8" messageSequenceNumber="1" offset="0" originalLength="-1" persistence="2" priority="-1" putApplicationType="0" replyToQueueManagerName="QMGR" replyToQueueName="OUT" report="0"/>
+    </MQInputMessage>
+    <MQInputMessage timestamp="1462342975413" nodeId="FCMComposite_1_8" name="PassMessage" id="1462342975413-13">
+        <plainText>%7B%0A++%22left%22%3A+5%2C%0A++%22right%22%3A+7%0A%7D</plainText>
+        <MessageHeader backoutCount="0" characterSet="0" encoding="0" expiry="-1" feedback="0" messageFlags="0" messageType="8" messageSequenceNumber="1" offset="0" originalLength="-1" persistence="2" priority="-1" putApplicationType="0" replyToQueueManagerName="" replyToQueueName="OUT" report="0" msgId="414d5120514d4752202020202020202080d94b5732770120"/>
+    </MQInputMessage>
+</MessagePool>
